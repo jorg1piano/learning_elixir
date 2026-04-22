@@ -25,3 +25,16 @@ receive do
   :world -> IO.puts("got world")
 end
 ```
+
+# Raw process example
+
+```iex
+pid = RawCounter.start(0)
+send(pid, {:inc, self()})
+flush()                       # clears the mailbox, handy for poking around without writing a receive
+send(pid, {:inc, self()})
+flush()                       # → 2
+send(pid, {:get, self()})
+flush()                       # → 2
+send(pid, :stop)
+```
