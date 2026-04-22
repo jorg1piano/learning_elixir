@@ -16,18 +16,22 @@ defprotocol Shapes.Shape do
 end
 
 defmodule Shapes do
-  @moduledoc """
-  Top-level operations on shapes
-  """
+  @moduledoc "Top-level operations on shapes."
 
-  def save(shape, format) do
-    serializer =
-      case format do
-        :json -> Shapes.Serializers.JsonSerializer
-        :csv -> Shapes.Serializers.CsvSerializer
-        _ -> raise "Unsupported format #{format}"
-      end
+  @formats %{
+    json: Shapes.Serializers.JsonSerializer,
+    csv: Shapes.Serializers.CsvSerializer
+  }
 
+  @type format_tag :: :json | :csv
+
+  @spec save(Shapes.Shape.t(), format_tag() | module()) :: :ok
+  def save(shape, format) when format in [:json, :csv] do
+    serializer = Map.fetch!(@formats, format)
+    save(shape, serializer)
+  end
+
+  def save(shape, serializer) when is_atom(serializer) do
     content = serializer.serialize(shape)
     File.write!("shape.#{serializer.extension()}", content)
   end

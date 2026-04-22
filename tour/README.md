@@ -29,3 +29,12 @@ defmodule Counter do
   def init(n), do: {:ok, n}
 end
 ```
+
+# inspect behaviours at runtime
+
+```ex
+Shapes.Serializer.behaviour_info(:callbacks)
+# output:
+# iex(1)> Shapes.Serializer.behaviour_info(:callbacks)
+# [serialize: 1, extension: 0]
+```
