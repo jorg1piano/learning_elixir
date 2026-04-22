@@ -14,3 +14,21 @@ defprotocol Shapes.Shape do
 
   def area(shape)
 end
+
+defmodule Shapes do
+  @moduledoc """
+  Top-level operations on shapes
+  """
+
+  def save(shape, format) do
+    serializer =
+      case format do
+        :json -> Shapes.Serializers.JsonSerializer
+        :csv -> Shapes.Serializers.CsvSerializer
+        _ -> raise "Unsupported format #{format}"
+      end
+
+    content = serializer.serialize(shape)
+    File.write!("shape.#{serializer.extension()}", content)
+  end
+end
