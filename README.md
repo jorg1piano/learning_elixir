@@ -14,16 +14,22 @@ mix new hello_world
 
 mix test
 
-# IEX - Repl IEX (Interactive Elixir.)
+# IEX
 
 ```
-iex
+iex                     # simple repl
+iex -r file.ex          # load a file, then prompt
+iex -S mix              # REPL with your project loaded
 ```
 
-## IEX in project
+## IEX helpers
 
 ```
-iex -S mix
+h Enum.map         # show docs ex. for Enum.map
+i "hello"          # info about a value
+exports Enum       # list public functions
+recompile          # reload the project
+h()                # Se all helpers
 ```
 
 Opens an IEx shell inside a BEAM VM.
