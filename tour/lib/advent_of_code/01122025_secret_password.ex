@@ -7,12 +7,15 @@ defmodule SecretPassword do
     |> find_password()
   end
 
-  @max_position 99
+  # 0 to 99
+  @positions 100
 
   def step({:left, number}, current_position) do
+    rem(current_position - number + @positions, @positions)
   end
 
   def step({:right, number}, current_position) do
+    rem(current_position + number, @positions)
   end
 
   # A file with a list of turns separated by newlines.
