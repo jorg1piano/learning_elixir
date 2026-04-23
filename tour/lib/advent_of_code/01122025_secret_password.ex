@@ -6,7 +6,7 @@
 # L24
 # ```
 defmodule SecretPassword do
-  def solve(input_file) do
+  def solve(input_file, start_position) do
     File.read!(input_file)
     |> String.trim()
     |> String.split("\n")
@@ -16,15 +16,15 @@ defmodule SecretPassword do
         "R" <> number -> {:right, String.to_integer(number)}
       end
     end)
-    |> find_password()
+    |> find_password(start_position)
   end
 
   # The password is the number of times the dial has landed on the number 0
   # The dial can also be turned from 0 to 99 and from 99 to 0
-  defp find_password(tagged_list_of_turns) do
+  defp find_password(tagged_list_of_turns, start_position) do
     tagged_list_of_turns
     # position, count
-    |> Enum.reduce({50, 0}, fn {direction, clicks}, {current_position, count} ->
+    |> Enum.reduce({start_position, 0}, fn {direction, clicks}, {current_position, count} ->
       new_position = SecretPassword.step({direction, clicks}, current_position)
       {new_position, count + if(new_position == 0, do: 1, else: 0)}
     end)
