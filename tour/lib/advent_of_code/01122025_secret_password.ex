@@ -11,11 +11,11 @@ defmodule SecretPassword do
   @positions 100
 
   def step({:left, number}, current_position) do
-    rem(current_position - number + @positions, @positions)
+    Integer.mod(current_position - number, @positions)
   end
 
   def step({:right, number}, current_position) do
-    rem(current_position + number, @positions)
+    Integer.mod(current_position + number, @positions)
   end
 
   # A file with a list of turns separated by newlines.
@@ -28,7 +28,6 @@ defmodule SecretPassword do
     file_contents
     |> String.trim()
     |> String.split("\n")
-    |> Enum.map(fn item -> {:left, item} end)
   end
 
   def tagged_list_of_turns(list_of_turns) do
@@ -43,6 +42,14 @@ defmodule SecretPassword do
 
   # The password is the number of times the dial has landed on the number 0
   # The dial can also be turned from 0 to 99 and from 99 to 0
-  defp find_password(list_of_turns) do
+  defp find_password(tagged_list_of_turns) do
+    tagged_list_of_turns
+    # position, count
+    |> Enum.reduce({50, 0}, fn {direction, clicks}, {current_position, count} ->
+      new_position = SecretPassword.step({direction, clicks}, current_position)
+      {new_position, count + if(new_position == 0, do: 1, else: 0)}
+    end)
+    # elem extracts the second element in the tuple, the count
+    |> elem(1)
   end
 end
