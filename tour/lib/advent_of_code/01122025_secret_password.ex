@@ -1,5 +1,6 @@
 # Solves a puzzle where we take in a list of turns on a dial
-# in this format
+# in this format. The result of solve is the number
+# of times the dial has landed on the number 0.c
 # ```
 # L42
 # R25
