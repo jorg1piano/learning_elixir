@@ -16,6 +16,11 @@ defmodule SecretPassword do
     file_contents
     |> String.trim()
     |> String.split("\n")
+    |> Enum.map(fn item -> {:left, item} end)
+  end
+
+  def tagged_list_of_turns(list_of_turns) do
+    list_of_turns
   end
 
   # The password is the number of times the dial has landed on the number 0
