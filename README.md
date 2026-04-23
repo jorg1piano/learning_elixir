@@ -50,3 +50,23 @@ iex -e "IO.puts(:hello)"
 # Intresting facts:
 
 - The BEAM VM uses atoms as module names,
+
+# Tuples
+
+It's idiomatic Elixir to have what is called a tag tuple where the
+first element is an atom and the second element is the payload.
+
+```elixir
+{:error, reason}    # 2-tuple, tagged (atom first)
+{1, 2, 3}           # 3-tuple, untagged
+{}                  # empty tuple, valid but rare in practice
+```
+
+```elixir
+# Example of the pattern matching on a non empty list
+# head always has a value, tail might be an empty list
+def handle_call({:add, shape}, _from, [head | tail]) do
+  #                                    ^^^^^^^^^^^^
+  #                                    destructuring the state list
+end
+```
