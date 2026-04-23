@@ -3,7 +3,16 @@ defmodule SecretPassword do
     input_file
     |> read_file()
     |> extract_list_from_file_contents()
+    |> tagged_list_of_turns()
     |> find_password()
+  end
+
+  @max_position 99
+
+  def step({:left, number}, current_position) do
+  end
+
+  def step({:right, number}, current_position) do
   end
 
   # A file with a list of turns separated by newlines.
