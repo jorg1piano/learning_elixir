@@ -21,6 +21,12 @@ defmodule SecretPassword do
 
   def tagged_list_of_turns(list_of_turns) do
     list_of_turns
+    |> Enum.map(fn item ->
+      case item do
+        "L" <> number -> {:left, String.to_integer(number)}
+        "R" <> number -> {:right, String.to_integer(number)}
+      end
+    end)
   end
 
   # The password is the number of times the dial has landed on the number 0
