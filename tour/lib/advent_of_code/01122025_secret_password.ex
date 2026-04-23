@@ -1,43 +1,22 @@
+# Solves a puzzle where we take in a list of turns on a dial
+# in this format
+# ```
+# L42
+# R25
+# L24
+# ```
 defmodule SecretPassword do
   def solve(input_file) do
-    input_file
-    |> read_file()
-    |> extract_list_from_file_contents()
-    |> tagged_list_of_turns()
-    |> find_password()
-  end
-
-  # 0 to 99
-  @positions 100
-
-  def step({:left, number}, current_position) do
-    Integer.mod(current_position - number, @positions)
-  end
-
-  def step({:right, number}, current_position) do
-    Integer.mod(current_position + number, @positions)
-  end
-
-  # A file with a list of turns separated by newlines.
-  # L10\nR20 etc...
-  defp read_file(input_file) do
     File.read!(input_file)
-  end
-
-  defp extract_list_from_file_contents(file_contents) do
-    file_contents
     |> String.trim()
     |> String.split("\n")
-  end
-
-  def tagged_list_of_turns(list_of_turns) do
-    list_of_turns
     |> Enum.map(fn item ->
       case item do
         "L" <> number -> {:left, String.to_integer(number)}
         "R" <> number -> {:right, String.to_integer(number)}
       end
     end)
+    |> find_password()
   end
 
   # The password is the number of times the dial has landed on the number 0
@@ -49,7 +28,17 @@ defmodule SecretPassword do
       new_position = SecretPassword.step({direction, clicks}, current_position)
       {new_position, count + if(new_position == 0, do: 1, else: 0)}
     end)
-    # elem extracts the second element in the tuple, the count
     |> elem(1)
+  end
+
+  # 0 to 99
+  @positions 100
+
+  def step({:left, number}, current_position) do
+    Integer.mod(current_position - number, @positions)
+  end
+
+  def step({:right, number}, current_position) do
+    Integer.mod(current_position + number, @positions)
   end
 end
