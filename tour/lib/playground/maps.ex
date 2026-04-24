@@ -8,4 +8,8 @@ defmodule Maps do
   # Map.fetch/2 returns a tuple {:ok, value} if the key is found, or :error if it is not.
   def access_with_fetch, do: Map.fetch(new_literal(), :name)
   def access_with_fetch_not_found, do: Map.fetch(new_literal(), :non_existing_key)
+
+  # Map definition with atom keys (terser syntax)
+  def map_definition_with_atom_keys_terser_syntax, do: %{name: "Jorgen", age: 33}
+  def map_definition_with_string_keys, do: %{:name => "Jorgen", :age => 33}
 end
