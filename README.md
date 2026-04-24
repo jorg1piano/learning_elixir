@@ -138,4 +138,6 @@ elixira_list = [1, 2, 3]
 new_list = a_list ++ [4]
 ```
 
-When appending like this, Elixir must traverse the entire a_list and rebuild every "cons cell", because the final node of a_list points to [] and needs to be replaced with a pointer to [4]. Since lists are immutable, the original can't be modified — a new list is constructed. This makes appending O(n) in both time and space.
+When appending like this, Elixir must traverse the entire a_list and rebuild every "cons cell", because the final node of a_list points to [] and needs to be replaced with a pointer to [4]. Since lists are immutable, the original can't be m odified — a new list is constructed. This makes appending O(n) in both time and space.
+
+Elixir does not have a dedicated string type. Strings are binaries.

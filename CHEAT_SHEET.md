@@ -1,0 +1,13 @@
+- defmodule (a macro)
+- def (a macro)
+- defp (a macro)
+- ~s(This is a string sigil)
+- Everything is an expression that returns a value
+- Maps, list, constant
+- @module_attritbute
+- |> pipe operator
+- preemptive scheduling
+- lambda syntax: `lambda = &(&1 + &2 + &3)` is the same as `lambda = fn x, y, z -> x + y + z`
+- range> `range = 1..10`
+- keywordlist `days = [{:monday, 1}, {:tuesday, 2}]` or better `days = [monday: 1, tuesday: 2]`, read from list `[monday: 1][:monday]`
+- keywordlist sugar `IO.inspect([100, 200, 300], [width: 3, height: 4])` is the same as `IO.inspect([100, 200, 300], width: 3, height: 4)`
