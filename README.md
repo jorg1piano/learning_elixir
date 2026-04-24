@@ -88,3 +88,54 @@ def and defmodule are not keywords, but macros.
 If a function has no argument, it is allowed to omit the parentheses in the function definition. Although this is allowed according to Elixir in Action book, it's not a recommended practice.
 
 # arity - the number of arguments a function takes
+
+#
+
+Aliases: Atoms can also be written as AnAtom, in which case it compiles to :"Elixir.AnAtom"
+
+Booleans: They don't exist. true and false are syntactic sugar for :true and :false
+Nil: `:nil == nil` evaluates to true
+
+# Logical operations
+
+```elixir
+true and false
+false or true
+not false
+```
+
+# Truthynes
+
+```elixir
+nil || false || 5 || true # evaluates to 5
+```
+
+Similar to your JavaScript, Elixir has the concept of truthiness.
+`or` and `and` are called strict boolean operators (or just boolean operators).
+`||` and `&&` are called relaxed boolean operators (or short-circuit operators based on truthiness).
+
+# Lists are recursive pairs of head and tail
+
+```elixir
+[1 | [2 | [3 | [4]]]]
+```
+
+evaulates to [1, 2, 3, 4]
+The `|`is the cons operator (short for "construct").
+It separates the head (first element) from the tail (rest of the list).
+
+O(1) timecomplexity
+
+```elixir
+a_list = [1, 2, 3]
+new_list = [0 | a_list]
+```
+
+Because of the recursive nature of lists, there is no copying involved when prepending to a list in this way.
+
+```elixir
+elixira_list = [1, 2, 3]
+new_list = a_list ++ [4]
+```
+
+When appending like this, Elixir must traverse the entire a_list and rebuild every "cons cell", because the final node of a_list points to [] and needs to be replaced with a pointer to [4]. Since lists are immutable, the original can't be modified — a new list is constructed. This makes appending O(n) in both time and space.
