@@ -13,4 +13,11 @@ defmodule MatchOperator do
     # {name, age} = "This does not match the pattern"
     # commented out so the project compiles without error
   end
+
+  def match_returns do
+    # The match operator returns the value on the right side if the match is successful.
+    result = {name, age} = {"Alice", 30}
+    IO.puts("Result of match: #{inspect(result)}")
+    IO.puts("Name: #{name}, Age: #{age}")
+  end
 end
