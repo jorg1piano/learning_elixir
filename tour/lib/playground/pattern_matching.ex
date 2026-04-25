@@ -58,3 +58,12 @@ defmodule PinOperator do
     # {^name} = {"Peter"}
   end
 end
+
+defmodule MatchingBinaries do
+  def run do
+    binary = <<4, 2, 3>>
+    <<a, b, c>> = binary
+    IO.puts("Binary: #{inspect(binary)}")
+    IO.puts("a: #{a}, b: #{b}, c: #{c}")
+  end
+end
