@@ -21,3 +21,17 @@ defmodule MatchOperator do
     IO.puts("Name: #{name}, Age: #{age}")
   end
 end
+
+defmodule NestedMatching do
+  def simple do
+    {_, time} = :calendar.local_time()
+    {hour, minute, second} = time
+    IO.puts("Current time: #{time}")
+    IO.puts("Hour: #{hour}, Minute: #{minute}, Second: #{second}")
+  end
+
+  def nested do
+    {_, {hour, minute, _}} = :calendar.local_time()
+    IO.puts("Current time: #{hour}:#{minute}")
+  end
+end
