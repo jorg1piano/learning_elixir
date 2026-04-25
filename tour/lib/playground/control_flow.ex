@@ -37,7 +37,9 @@ defmodule NestedMatching do
 end
 
 # The pin operator (^) is used to match against the value of an already bound variable.
-# In simple speak, you could for example match the contents of a string.
+# In simple speak, you could for example enforce the exact contents of a variable
+# instead of rebinding it to a new value. If the pattern on the left does not match the
+# value of the variable, it will raise a MatchError.
 defmodule PinOperator do
   def run_without_pin do
     name = "Jorgen"
