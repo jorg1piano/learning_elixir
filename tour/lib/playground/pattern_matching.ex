@@ -66,4 +66,10 @@ defmodule MatchingBinaries do
     IO.puts("Binary: #{inspect(binary)}")
     IO.puts("a: #{a}, b: #{b}, c: #{c}")
   end
+
+  # Split a binary into two parts, where the first part is 4 bits (half a byte) and the second part is the remaining 4 bits.
+  def run_with_split do
+    <<a::4, b::4>> = <<155>>
+    IO.puts("a: #{a}, b: #{b}")
+  end
 end
