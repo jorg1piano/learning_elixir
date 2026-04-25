@@ -94,4 +94,14 @@ defmodule MatchChaining do
     # Because the result of a match is always the term on the right, both variables in this case are equal to 4.
     IO.puts("a: #{a}, b: #{b}")
   end
+
+  # Very useful trick from the "Elixir in Action" book.
+  def full_value_and_destructed_parts do
+    # |> elem(0) just takes the first element of the tuple returned by :calendar.local_time(), which is the date.
+    date = {year, _, _} = :calendar.local_time() |> elem(0)
+
+    # Because the result of a match is the value on the right, you can chain matches
+    # to capture both the whole value (date) and destructured parts (year) at the same time.
+    IO.puts("Year: #{year}")
+  end
 end
