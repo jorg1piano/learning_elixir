@@ -73,3 +73,25 @@ defmodule MatchingBinaries do
     IO.puts("a: #{a}, b: #{b}")
   end
 end
+
+defmodule MatchingStrings do
+  def url_example do
+    command = "ping /index.html"
+
+    # Here in the pattern matching, we expect that the string starts with "ping" and the rest is bound to the variable "path".
+    "ping " <> path = command
+
+    IO.puts("Command: #{command}")
+    IO.puts("Path: #{path}")
+  end
+end
+
+defmodule MatchChaining do
+  def run do
+    # a = (b = 1 + 3)
+    a = b = 1 + 3
+
+    # Because the result of a match is always the term on the right, both variables in this case are equal to 4.
+    IO.puts("a: #{a}, b: #{b}")
+  end
+end
