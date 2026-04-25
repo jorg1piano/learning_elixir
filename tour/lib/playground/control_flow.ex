@@ -35,3 +35,24 @@ defmodule NestedMatching do
     IO.puts("Current time: #{hour}:#{minute}")
   end
 end
+
+# The pin operator (^) is used to match against the value of an already bound variable.
+# In simple speak, you could for example match the contents of a string.
+defmodule PinOperator do
+  def run_without_pin do
+    name = "Jorgen"
+    IO.puts("Name: #{name}")
+    # This will rebind the variable name to "Peter" instead of matching against "Jorgen".
+    {name} = {"Peter"}
+    IO.puts("Name: #{name}")
+  end
+
+  def run_with_pin do
+    name = "Jorgen"
+    IO.puts("Name: #{name}")
+
+    # This will match against the value of name, which is "Jorgen", and raise a MatchError because it does not match "Peter".
+    # commented out so it compiles without error
+    # {^name} = {"Peter"}
+  end
+end
