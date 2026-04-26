@@ -34,3 +34,8 @@ defmodule Geometry do
   # because the unknown would match all the above.
   def area(unknown), do: {:error, {:unknown_shape, unknown}}
 end
+
+defmodule Factorial do
+  def solve(0), do: 1
+  def solve(n), do: n * solve(n - 1)
+end
