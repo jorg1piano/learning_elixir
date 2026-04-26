@@ -30,5 +30,7 @@ defmodule Geometry do
   # Matches when we have 2-tuple and first argument is a square
   def area(%Square{a: a}), do: a * a
 
+  # Order matters here, if this was placed first, we would always call this function
+  # because the unknown would match all the above.
   def area(unknown), do: {:error, {:unknown_shape, unknown}}
 end
