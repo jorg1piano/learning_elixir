@@ -22,17 +22,11 @@ defmodule Geometry do
 
   # area/1
   # Matches when we have 3-tuple and first argument is a rectangle
-  def area(%Rectangle{a: a, b: b}) do
-    a * b
-  end
+  def area(%Rectangle{a: a, b: b}), do: a * b
 
   # Matches when we have 2-tuple and first argument is a circle
-  def area(%Circle{r: r}) do
-    r * r * 3.14
-  end
+  def area(%Circle{r: r}), do: r * r * 3.14
 
   # Matches when we have 2-tuple and first argument is a square
-  def area(%Square{a: a}) do
-    a * a
-  end
+  def area(%Square{a: a}), do: a * a
 end
