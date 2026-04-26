@@ -38,3 +38,10 @@ Shapes.Serializer.behaviour_info(:callbacks)
 # iex(1)> Shapes.Serializer.behaviour_info(:callbacks)
 # [serialize: 1, extension: 0]
 ```
+
+# Atoms
+
+There is a limit of max number of atoms set to 1,048,576. If you exceed this, the BEAM vm crashes.
+Atoms are not garbage collected and when traded, they stay around in the VM forever.
+This is the reason why, despite my intuition of wanting to use atoms for events,
+for instance in a Phoenix Live View template, I often see older people use strings in code examples and tutorials.
