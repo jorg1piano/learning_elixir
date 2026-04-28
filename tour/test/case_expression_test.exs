@@ -38,5 +38,21 @@ defmodule CaseExpressionsTest do
     test "add returns {:add, a, b}" do
       assert CaseExpressions.command_parser("add 1 2") == {:ok, :add, 1, 2}
     end
+
+    test "subtract returns {:subtract, a, b}" do
+      assert CaseExpressions.command_parser("subtract 1 2") == {:ok, :subtract, 1, 2}
+    end
+
+    test "multiply returns {:multiply, a, b}" do
+      assert CaseExpressions.command_parser("multiply 1 2") == {:ok, :multiply, 1, 2}
+    end
+
+    test "divide returns {:divide, a, b}" do
+      assert CaseExpressions.command_parser("divide 1 2") == {:ok, :divide, 1, 2}
+    end
+
+    test "divide on zero returns {:error, reason}" do
+      assert CaseExpressions.command_parser("divide 10 0") == {:error, "cannot divide by zero"}
+    end
   end
 end

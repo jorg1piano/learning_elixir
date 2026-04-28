@@ -29,6 +29,26 @@ defmodule CaseExpressions do
         {num_a, _} = Integer.parse(a)
         {num_b, _} = Integer.parse(b)
         {:ok, :add, num_a, num_b}
+
+      ["subtract", a, b] ->
+        {num_a, _} = Integer.parse(a)
+        {num_b, _} = Integer.parse(b)
+        {:ok, :subtract, num_a, num_b}
+
+      ["multiply", a, b] ->
+        {num_a, _} = Integer.parse(a)
+        {num_b, _} = Integer.parse(b)
+        {:ok, :multiply, num_a, num_b}
+
+      ["divide", a, b] ->
+        {num_a, _} = Integer.parse(a)
+        {num_b, _} = Integer.parse(b)
+
+        if(num_a == 0 or num_b == 0) do
+          {:error, "cannot divide by zero"}
+        else
+          {:ok, :divide, num_a, num_b}
+        end
     end
   end
 end
