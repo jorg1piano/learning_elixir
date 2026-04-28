@@ -33,4 +33,10 @@ defmodule CaseExpressionsTest do
       assert CaseExpressions.trafic_light("unknown_signal") == :unknown_signal
     end
   end
+
+  describe "command_parser" do
+    test "add returns {:add, a, b}" do
+      assert CaseExpressions.command_parser("add 1 2") == {:ok, :add, 1, 2}
+    end
+  end
 end

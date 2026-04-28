@@ -15,4 +15,20 @@ defmodule CaseExpressions do
       _ -> :unknown_signal
     end
   end
+
+  # "add 5 3" → {:ok, :add, 5, 3}
+  # "subtract 10 4" → {:ok, :subtract, 10, 4}
+  # "multiply 2 6" → {:ok, :multiply, 2, 6}
+  # "divide 10 2" → {:ok, :divide, 10, 2}
+  # "divide 10 0" → {:error, "cannot divide by zero"}
+  def command_parser(command_str) do
+    parts = String.split(command_str)
+
+    case parts do
+      ["add", a, b] ->
+        {num_a, _} = Integer.parse(a)
+        {num_b, _} = Integer.parse(b)
+        {:ok, :add, num_a, num_b}
+    end
+  end
 end
