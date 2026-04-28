@@ -5,4 +5,14 @@ defmodule CaseExpressions do
       false -> b
     end
   end
+
+  # Returns :stop, :slow_down, :go or :unknown_signal
+  def trafic_light(color) do
+    case color do
+      "red" -> :stop
+      "yellow" -> :slow_down
+      "green" -> :go
+      _ -> :unknown_signal
+    end
+  end
 end
