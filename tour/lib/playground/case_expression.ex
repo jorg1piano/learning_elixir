@@ -40,14 +40,16 @@ defmodule CaseExpressions do
         {num_b, _} = Integer.parse(b)
         {:ok, :multiply, num_a, num_b}
 
+      # Could also have been expressed like
+      # ["divide", _a, "0"] -> {:error, "cannot divide by zero"}
+      # ["divide", a, b] -> {:ok, :divide, String.to_integer(a), String.to_integer(b)}
       ["divide", a, b] ->
         {num_a, _} = Integer.parse(a)
         {num_b, _} = Integer.parse(b)
 
-        if(num_b == 0) do
-          {:error, "cannot divide by zero"}
-        else
-          {:ok, :divide, num_a, num_b}
+        cond do
+          num_b == 0 -> {:error, "cannot divide by zero"}
+          true -> {:ok, :divide, num_a, num_b}
         end
     end
   end
