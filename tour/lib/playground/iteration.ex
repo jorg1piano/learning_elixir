@@ -11,4 +11,7 @@ defmodule Iteration do
     print_natural_nums(n - 1)
     IO.puts(n)
   end
+
+  def sum([]), do: 0
+  def sum([head | tail]), do: head + sum(tail)
 end
