@@ -14,4 +14,19 @@ defmodule Iteration do
 
   def sum([]), do: 0
   def sum([head | tail]), do: head + sum(tail)
+
+  def sum_with_tail_call(current_sum, []), do: current_sum
+
+  def sum_with_tail_call(current_sum, [head | tail]) do
+    new_sum = head + current_sum
+    # Tail-recursive: the recursive call is the last thing this function does,
+    # with no work happening after it returns. The BEAM applies tail call
+    # optimization (TCO) here, reusing the current stack frame instead of
+    # pushing a new one. This means the function uses constant stack space
+    # regardless of list length, so it can handle arbitrarily large lists
+    # without a stack overflow.
+    #
+    # Our function above sum\1 would not have the same optimilization available
+    sum_with_tail_call(new_sum, tail)
+  end
 end
