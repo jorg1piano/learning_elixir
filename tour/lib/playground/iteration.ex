@@ -15,6 +15,8 @@ defmodule Iteration do
   def sum([]), do: 0
   def sum([head | tail]), do: head + sum(tail)
 
+  # In a real app this would probably be called defp do_sum and be called from
+  # sum. This will give us a nice interface and also the tail call optimization.
   def sum_with_tail_call(current_sum, []), do: current_sum
 
   def sum_with_tail_call(current_sum, [head | tail]) do
