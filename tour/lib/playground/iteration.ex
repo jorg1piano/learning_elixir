@@ -1,5 +1,6 @@
 defmodule Iteration do
   def print_natural_nums(1), do: IO.puts(1)
+  def print_natural_nums(num) when num < 0, do: {:error, "#{num} is not a natural number"}
 
   def print_natural_nums(n) do
     # Order matters: because the recursive call comes first, the prints happen
