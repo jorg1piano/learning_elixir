@@ -31,4 +31,14 @@ defmodule Iteration do
     # Our function above sum\1 would not have the same optimilization available
     sum_with_tail_call(new_sum, tail)
   end
+
+  def range(from, to), do: do_range([], from, to + 1)
+
+  defp do_range(current, from, to) when from == to, do: current
+
+  defp do_range(current, from, to) do
+    next = to - 1
+    current = [next | current]
+    do_range(current, from, next)
+  end
 end
