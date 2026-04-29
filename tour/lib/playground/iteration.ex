@@ -38,6 +38,10 @@ defmodule Iteration do
 
   defp do_range(current, from, to) do
     next = to - 1
+    # Counting down and prepending each value gives us an ascending list
+    # without needing to reverse at the end. Prepending is O(1), while
+    # appending with ++ would be O(n) per step (turning the whole function
+    # into O(n²)).
     current = [next | current]
     do_range(current, from, next)
   end
