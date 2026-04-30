@@ -10,4 +10,9 @@ defmodule LambdaEnum do
       &(2 * &1)
     )
   end
+
+  def even_numbers(list) do
+    # Same as: Enum.filter(list, fn x -> rem(x, 2) == 1 end)
+    Enum.filter(list, &(rem(&1, 2) == 0))
+  end
 end
