@@ -50,16 +50,12 @@ defmodule Iteration do
 
   def do_positive(acc_list, []), do: acc_list |> Enum.sort()
 
-  def do_positive(acc_list, rest_list) do
-    [head | tail] = rest_list
-
+  def do_positive(acc_list, [head | tail]) do
     next =
       case head do
         n when n >= 0 -> head
         _ -> nil
       end
-
-    IO.puts(next)
 
     if next != nil do
       do_positive([next | acc_list], tail)
