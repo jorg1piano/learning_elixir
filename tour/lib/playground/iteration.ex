@@ -45,4 +45,26 @@ defmodule Iteration do
     current = [next | current]
     do_range(current, from, next)
   end
+
+  def positive(list), do: do_positive([], list)
+
+  def do_positive(acc_list, list) when list == [], do: acc_list |> Enum.sort()
+
+  def do_positive(acc_list, rest_list) do
+    [head | tail] = rest_list
+
+    next =
+      case head do
+        n when n >= 0 -> head
+        _ -> nil
+      end
+
+    IO.puts(next)
+
+    if next != nil do
+      do_positive([next | acc_list], tail)
+    else
+      do_positive(acc_list, tail)
+    end
+  end
 end
