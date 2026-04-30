@@ -15,4 +15,8 @@ defmodule LambdaEnum do
     # Same as: Enum.filter(list, fn x -> rem(x, 2) == 1 end)
     Enum.filter(list, &(rem(&1, 2) == 0))
   end
+
+  def odd_numbers(list) do
+    Enum.filter(list, &(rem(&1, 2) == 1))
+  end
 end

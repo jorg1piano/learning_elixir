@@ -6,7 +6,11 @@ defmodule LambdaEnumTest do
     assert LambdaEnum.double([1, 2, 3]) == [2, 4, 6]
   end
 
-  test "even_numbers filters even numbers" do
+  test "even_numbers returns even numbers" do
     assert LambdaEnum.even_numbers([1, 2, 3, 4]) == [2, 4]
+  end
+
+  test "odd_numbers returns odd numbers" do
+    assert LambdaEnum.odd_numbers([1, 2, 3, 4]) == [1, 3]
   end
 end
