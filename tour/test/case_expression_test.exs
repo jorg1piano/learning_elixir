@@ -55,10 +55,4 @@ defmodule CaseExpressionsTest do
       assert CaseExpressions.command_parser("divide 10 0") == {:error, "cannot divide by zero"}
     end
   end
-
-  describe "positive" do
-    test "returns a new list with positive numbers" do
-      assert Iteration.positive([-2, 1, 2, 3, -5]) == [1, 2, 3]
-    end
-  end
 end

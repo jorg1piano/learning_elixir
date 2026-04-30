@@ -13,4 +13,10 @@ defmodule IterationTest do
   test "returns positive range of numbers" do
     assert Iteration.range(0, 4) == [0, 1, 2, 3, 4]
   end
+
+  describe "positive" do
+    test "returns a new list with positive numbers" do
+      assert Iteration.positive([-2, 1, 2, 3, -5]) == [1, 2, 3]
+    end
+  end
 end
