@@ -32,6 +32,7 @@ defmodule Iteration do
     sum_with_tail_call(new_sum, tail)
   end
 
+  # Original attempt at: 1984d44f9d6bf67e231b8a374caa6998d990ad5b
   def range(from, to), do: do_range([], from, to + 1)
 
   defp do_range(current, from, to) when from == to, do: current
@@ -48,19 +49,14 @@ defmodule Iteration do
 
   def positive(list), do: do_positive([], list)
 
-  def do_positive(acc_list, []), do: acc_list |> Enum.sort()
+  # Base case: empty list — return the accumulator sorted
+  defp do_positive(acc_list, []), do: acc_list |> Enum.sort()
 
-  def do_positive(acc_list, [head | tail]) do
-    next =
-      case head do
-        n when n >= 0 -> head
-        _ -> nil
-      end
-
-    if next != nil do
-      do_positive([next | acc_list], tail)
-    else
-      do_positive(acc_list, tail)
-    end
+  # Non-negative head: prepend it to the accumulator and recurse
+  defp do_positive(acc_list, [head | tail]) when head >= 0 do
+    do_positive([head | acc_list], tail)
   end
+
+  # Negative head: skip it and recurse
+  defp do_positive(acc_list, [_head | tail]), do: do_positive(acc_list, tail)
 end
