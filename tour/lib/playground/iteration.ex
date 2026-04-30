@@ -48,7 +48,7 @@ defmodule Iteration do
 
   def positive(list), do: do_positive([], list)
 
-  def do_positive(acc_list, list) when list == [], do: acc_list |> Enum.sort()
+  def do_positive(acc_list, []), do: acc_list |> Enum.sort()
 
   def do_positive(acc_list, rest_list) do
     [head | tail] = rest_list
