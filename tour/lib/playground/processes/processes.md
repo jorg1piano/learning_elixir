@@ -141,10 +141,54 @@ iex(6)> 1..5
 # Registered processes
 
 ```elixir
-iex()> Process.register(self(), :some_name)
-iex()> send(:some_name, "a message")
-iex()> receive do
+iex(1)> Process.register(self(), :some_name)
+iex(2)> send(:some_name, "a message")
+iex(3)> receive do
         msg -> IO.puts("received #{msg}")
        end
 
 ```
+
+# A memory leak via unmatched messages
+
+When a process's `receive` doesn't have a clause matching every possible
+incoming message, unmatched messages stay in the mailbox forever. Over time,
+this accumulates — the mailbox grows, each `receive` scan gets slower, and
+the process consumes more memory. Eventually the BEAM may kill the process
+when it exceeds memory limits.
+
+```elixir
+defp loop() do
+  receive do
+    {:message, msg} -> do_something(msg)
+    # No catch-all clause — any other message shape stays in the mailbox forever.
+  end
+
+  loop()
+end
+```
+
+Demonstration:
+
+```elixir
+pid = spawn(fn -> loop() end)
+
+send(pid, {:message, "hello"})    # matched, processed, removed from mailbox
+send(pid, {:unknown})              # unmatched — stays in mailbox forever
+send(pid, {:message, "world"})    # `receive` skips :unknown, matches this, removes it
+
+# Mailbox now contains: [{:unknown}]
+# Each future receive call has to scan past :unknown before finding new work.
+```
+
+The fix is to add a catch-all clause that consumes (and ignores or logs)
+unrecognized messages:
+
+```elixir
+receive do
+  {:message, msg} -> do_something(msg)
+  _other -> :ignored
+end
+```
+
+Now no message can accumulate.
