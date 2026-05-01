@@ -43,6 +43,8 @@ defmodule TodoList.CsvImporter do
     |> Stream.reject(&(&1 == ""))
     # Split each line into [date, title]
     |> Stream.map(&String.split(&1, ","))
+    # Naive validation, reject if pattern does not match
+    |> Stream.filter(&match?([_date, _title], &1))
     # Build up the todo list by inserting each entry
     |> Enum.reduce(TodoListFinal.new(), fn [date, title], list ->
       TodoListFinal.add_entry(list, %{date: date, title: title})
