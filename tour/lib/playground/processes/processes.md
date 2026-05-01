@@ -137,3 +137,14 @@ iex(6)> 1..5
         # Collect the results
         |> Enum.map(fn _-> get_result.() end)
 ```
+
+# Registered processes
+
+```elixir
+iex()> Process.register(self(), :some_name)
+iex()> send(:some_name, "a message")
+iex()> receive do
+        msg -> IO.puts("received #{msg}")
+       end
+
+```
