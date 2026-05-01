@@ -29,22 +29,23 @@ defmodule TodoListFinal do
 end
 
 defmodule TodoList.CsvImporter do
-  def import(csv_file_path) do
-    with {:ok, contents} <- File.read(csv_file_path),
-         date_title_pairs <-
-           Enum.map(String.split(contents, "\n"), fn item -> String.split(item, ",") end) do
-      Enum.reduce(
-        date_title_pairs,
-        TodoListFinal.new(),
-        fn [date, title], acc -> TodoListFinal.add_entry(acc, %{date: date, title: title}) end
-      )
-    end
-  end
+  @moduledoc """
+  Imports a TodoList from a CSV file with `date,title` rows.
+  """
 
-  def add_to_todo([date, title], todolist) do
-    TodoListFinal.add_entry(todolist, %{
-      date: date,
-      title: title
-    })
+  def from_file(csv_file_path) do
+    csv_file_path
+    # Read line by line (lazy)
+    |> File.stream!()
+    # Strip the trailing newline from each line
+    |> Stream.map(&String.trim_trailing(&1, "\n"))
+    # Skip empty lines (e.g. a trailing newline at the end of the file)
+    |> Stream.reject(&(&1 == ""))
+    # Split each line into [date, title]
+    |> Stream.map(&String.split(&1, ","))
+    # Build up the todo list by inserting each entry
+    |> Enum.reduce(TodoListFinal.new(), fn [date, title], list ->
+      TodoListFinal.add_entry(list, %{date: date, title: title})
+    end)
   end
 end
