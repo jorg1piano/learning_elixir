@@ -9,6 +9,17 @@
 # iex(4)> DatabaseServer.run_async(server_pid, "query 2")
 # iex(5)> DatabaseServer.get_result()
 # ```
+#
+# Create a pool, and pick a server at random, not very effective but proves the concept
+# iex(1)> pool = Enum.map(1..100, fn _ -> DatabaseServer.start() end)
+# iex(2)> Enum.each(
+#           1..5,
+#           fn query_def ->
+#             server_pid = Enum.at(pool, :rand.uniform(100) - 1)
+#             DatabaseServer.run_async(server_pid, query_def)
+#           end
+#         )
+# iex(3)> Enum.map(1..5, fn _ -> DatabaseServer.get_result() end)
 defmodule DatabaseServer do
   # "interface function" to start the server
   def start do
