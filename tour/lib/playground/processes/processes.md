@@ -99,3 +99,34 @@ iex(4)> receive do
             {:signal, signal} -> IO.puts("received signal #{signal}")
         end
 ```
+
+# Collecting query results
+
+```elixir
+# run a query that simulates some work
+iex(1)> run_query =
+            fn query_def ->
+                Process.sleep(2000)
+                "#{query_def} result"
+            end
+# runs run_query async in another process, query_def is captured by the closure mechanism and is copied ower into the process
+iex(2)> async_query =
+            fn query_def ->
+                caller = self()
+                spawn(fn ->
+                    query_result = run_query.(query_def)
+                    send(caller, {:query_result, query_result})
+                    end)
+            end
+# Spin of 5 async queries, async_query sends message back to the caller
+iex(3)> Enum.each(1..5, &async_query.("query #{&1}"))
+# Get the result from the mailbox
+iex(4)> get_result =
+            fn ->
+                receive do
+                    {:query_result, result} -> result
+                end
+            end
+# Pick of message from the mailbox into a single list
+iex(5)> results = Enum.map(1..5, fn _ -> get_result.() end)
+```
