@@ -19,5 +19,13 @@ defmodule BankTransferTest do
       assert BankTransfer.transfer_money("acc-1", "acc-2", "should have been a number") ==
                {:error, :invalid_amount}
     end
+
+    test "transfering from non-existent account fails" do
+      assert BankTransfer.transfer_money("1", "acc-2", 1) == {:error, :account_not_found}
+    end
+
+    test "transfering to non-existent account fails" do
+      assert BankTransfer.transfer_money("acc-2", "1", 1) == {:error, :account_not_found}
+    end
   end
 end
