@@ -129,4 +129,11 @@ iex(4)> get_result =
             end
 # Pick of message from the mailbox into a single list
 iex(5)> results = Enum.map(1..5, fn _ -> get_result.() end)
+
+# Expressed as a single pipeline
+iex(6)> 1..5
+        # Do queries in another process
+        |> Enum.map(&async_query.("query #{&1}"))
+        # Collect the results
+        |> Enum.map(fn _-> get_result.() end)
 ```
