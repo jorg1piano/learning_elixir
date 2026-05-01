@@ -9,4 +9,13 @@ defmodule BankTransferTest do
   test "transfer amounts higher than the balance fails" do
     assert BankTransfer.transfer_money("acc-1", "acc-2", 501) == {:error, :insufficient_funds}
   end
+
+  test "passing negative amount fails" do
+    assert BankTransfer.transfer_money("acc-1", "acc-2", -1) == {:error, :invalid_amount}
+  end
+
+  test "passing string as amount fails" do
+    assert BankTransfer.transfer_money("acc-1", "acc-2", "should have been a number") ==
+             {:error, :invalid_amount}
+  end
 end
