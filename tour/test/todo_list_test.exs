@@ -9,4 +9,9 @@ defmodule TodoListTest do
            |> TodoList.add_entry(~D[2025-01-02], "Styremøte")
            |> TodoList.entries(~D[2025-01-01]) == ["Legetime", "Crossfit"]
   end
+
+  test "accessing a date without items returns an empty list" do
+    assert TodoList.new()
+           |> TodoList.entries(~D[2025-01-01]) == []
+  end
 end
