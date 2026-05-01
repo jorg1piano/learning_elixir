@@ -1,3 +1,5 @@
+# Changes the internal implementation from [TodoList] and abstracts
+# the dictionary containing list values into a MultiDict abstract
 defmodule TodoListV2 do
   def new(), do: MultiDict.new()
 
