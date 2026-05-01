@@ -15,4 +15,18 @@ defmodule TodoListFinalTest do
              2 => %{id: 2, title: "Item B"}
            }
   end
+
+  test "works as collectable" do
+    entries = [
+      %{date: ~D(2023-01-01), title: "Item A"},
+      %{date: ~D(2023-01-01), title: "Item B"},
+      %{date: ~D(2023-01-01), title: "Item C"}
+    ]
+
+    assert Enum.into(entries, TodoListFinal.new()).entries() == %{
+             1 => %{id: 1, date: ~D(2023-01-01), title: "Item A"},
+             2 => %{id: 2, date: ~D(2023-01-01), title: "Item B"},
+             3 => %{id: 3, date: ~D(2023-01-01), title: "Item C"}
+           }
+  end
 end
