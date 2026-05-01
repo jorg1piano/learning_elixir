@@ -23,7 +23,10 @@
 defmodule DatabaseServer do
   # "interface function" to start the server
   def start do
-    spawn(&loop/0)
+    spawn(fn ->
+      connection = :rand.uniform(1000)
+      loop(connection)
+    end)
   end
 
   def run_async(server_pid, query_def) do
@@ -38,20 +41,20 @@ defmodule DatabaseServer do
     end
   end
 
-  defp loop do
+  defp loop(connection) do
     receive do
       {:run_query, caller_pid, query_def} ->
-        query_result = run_query(query_def)
+        query_result = run_query(connection, query_def)
         send(caller_pid, {:query_result, query_result})
     end
 
     # Constant stack space, tail call optimization will be applied
     # This is despites its looks, not cpu heavy
-    loop()
+    loop(connection)
   end
 
-  defp run_query(query_def) do
+  defp run_query(connection, query_def) do
     Process.sleep(2000)
-    "#{query_def} result"
+    "Connection #{connection}: #{query_def} result"
   end
 end
