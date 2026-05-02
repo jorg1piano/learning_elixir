@@ -5,9 +5,9 @@ defmodule Todo.Server do
     GenServer.start(__MODULE__, nil)
   end
 
-  def add_entry(entry), do: GenServer.cast(__MODULE__, {:add_entry, entry})
+  def add_entry(pid, entry), do: GenServer.cast(pid, {:add_entry, entry})
 
-  def entries(), do: GenServer.call(__MODULE__, :entries)
+  def entries(pid), do: GenServer.call(pid, :entries)
 
   @impl true
   def init(_) do
