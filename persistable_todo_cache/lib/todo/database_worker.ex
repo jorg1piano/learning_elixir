@@ -1,0 +1,37 @@
+defmodule Todo.DatabaseWorker do
+  use GenServer
+
+  def start(folder_name) do
+    GenServer.start(__MODULE__, folder_name)
+  end
+
+  defp file_name(key, folder_path) do
+    Path.join(folder_path, to_string(key))
+  end
+
+  @impl true
+  def init(folder_name) do
+    File.mkdir_p!(folder_name)
+    {:ok, folder_name}
+  end
+
+  @impl true
+  def handle_cast({:store, key, data}, state) do
+    key
+    |> file_name(state)
+    |> File.write!(:erlang.term_to_binary(data))
+
+    {:noreply, state}
+  end
+
+  @impl true
+  def handle_call({:get, key}, _from_ref, state) do
+    data =
+      case File.read(file_name(key, state)) do
+        {:ok, contents} -> :erlang.binary_to_term(contents)
+        _ -> nil
+      end
+
+    {:reply, data, state}
+  end
+end
