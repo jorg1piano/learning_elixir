@@ -9,4 +9,13 @@ defmodule Todo.CacheTest do
     assert jorgen_pid != Todo.Cache.server_process(cache, "jonas")
     assert jorgen_pid == Todo.Cache.server_process(cache, "jorgen")
   end
+
+  test "to-do operations" do
+    {:ok, cache} = Todo.Cache.start()
+    alice = Todo.Cache.server_process(cache, "alice")
+    Todo.Server.add_entry(alice, %{title: "Dentist"})
+
+    entries = Todo.Server.entries(alice)
+    assert %{1 => %{id: 1, title: "Dentist"}} = entries
+  end
 end
