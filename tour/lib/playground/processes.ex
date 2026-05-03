@@ -1,5 +1,6 @@
 # iex(0)|> ProcessLink.linkedProccess
 # iex(1)|> ProcessLink.trapping_exit
+# iex(2)|> ProcessLink.monitor
 defmodule ProcessLink do
   def linkedProccess() do
     spawn(fn ->
@@ -33,5 +34,21 @@ defmodule ProcessLink do
 
     Process.sleep(1000)
     IO.puts("caller still alive")
+  end
+
+  def monitor do
+    # Spawn a process
+    target_pid = spawn(fn -> Process.sleep(1000) end)
+
+    # Monitor the process, if it goes down we receive a message in the inbox
+    Process.monitor(target_pid)
+
+    receive do
+      # The message in the inbox
+      {:DOWN, ref, :process, pid, reason} ->
+        IO.puts(
+          "Process down, message in mailbox received #{inspect(reason)} #{inspect(pid)} #{inspect(ref)}"
+        )
+    end
   end
 end
