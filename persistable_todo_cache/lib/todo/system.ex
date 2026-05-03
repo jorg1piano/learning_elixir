@@ -31,6 +31,15 @@
 #
 # iex(6)> length(Process.list())
 # 78
+#
+# Restart frequency
+# iex(1)> Todo.System.start_link()
+# iex(2)> for _ <- 1..4 do
+#           Process.exit(Process.whereis(Todo.Cache), :kill)
+#           Process.sleep(200)
+#         end
+# Restarts repeatedly, then
+# ** (EXIT from #PID<0.147.0>) shell process exited with reason: shutdown
 
 defmodule Todo.System do
   use Supervisor
