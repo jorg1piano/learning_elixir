@@ -1,5 +1,8 @@
 # Starting a supervisor process
 # iex(0)|> Supervisor.start_link([Todo.Cache], strategy: :one_for_one)
+# iex(1)|> cache_pid = Process.whereis(Todo.Cache)
+# iex(2)|> Process.exit(cache_pid, :kill)
+#
 defmodule Todo.Cache do
   use GenServer
 
