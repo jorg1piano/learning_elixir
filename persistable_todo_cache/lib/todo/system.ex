@@ -1,9 +1,36 @@
 # Illustrates how the "system" using Supervisor
 # can be launched through a nice interface.
+#
+# Here we prove that the the linking between system -> cache -> database -> database worker
+# all functions. The number of processes remains unchanged.
+# The old processes where killed, and new ones where started in their place.
+#
 # iex(1)> Todo.System.start_link()
+# Starting to-do cache
+# Starting Todo.Database
+# Starting Todo.DatabaseWorker
+# Starting Todo.DatabaseWorker
+# Starting Todo.DatabaseWorker
+# {:ok, #PID<0.156.0>}
+#
 # iex(2)> Todo.Cache.server_process("bob's list")
-# iex(3)> Process.exit(Process.whereis(Todo.Cache), :kill)
-# iex(4)> Todo.Cache.server_process("bob's list")
+# #PID<0.162.0>
+# iex(3)> length(Process.list())
+# 78
+#
+# iex(4)> Process.exit(Process.whereis(Todo.Cache), :kill)
+# true
+# Starting to-do cache
+# Starting Todo.Database
+# Starting Todo.DatabaseWorker
+# Starting Todo.DatabaseWorker
+# Starting Todo.DatabaseWorker
+#
+# iex(5)> Todo.Cache.server_process("bob's list")
+# #PID<0.168.0>
+#
+# iex(6)> length(Process.list())
+# 78
 
 defmodule Todo.System do
   use Supervisor
