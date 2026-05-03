@@ -11,6 +11,7 @@ defmodule Todo.DatabaseWorker do
 
   @impl true
   def init(folder_name) do
+    IO.puts("Starting Todo.DatabaseWorker")
     File.mkdir_p!(folder_name)
     {:ok, folder_name}
   end

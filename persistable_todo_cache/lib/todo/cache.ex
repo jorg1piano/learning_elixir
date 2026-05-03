@@ -1,16 +1,19 @@
+# Starting a supervisor process
+# iex(0)|> Supervisor.start_link([Todo.Cache], strategy: :one_for_one)
 defmodule Todo.Cache do
   use GenServer
 
-  def start do
-    GenServer.start(__MODULE__, nil)
+  def start_link(_) do
+    GenServer.start_link(__MODULE__, nil, name: __MODULE__)
   end
 
-  def server_process(cache_pid, todo_list_name) do
-    GenServer.call(cache_pid, {:server_process, todo_list_name})
+  def server_process(todo_list_name) do
+    GenServer.call(__MODULE__, {:server_process, todo_list_name})
   end
 
   @impl true
   def init(_) do
+    IO.puts("Starting to-do cache")
     Todo.Database.start()
     {:ok, %{}}
   end
